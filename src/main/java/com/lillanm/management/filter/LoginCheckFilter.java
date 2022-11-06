@@ -36,7 +36,7 @@ public class LoginCheckFilter implements Filter {
                 "/active/*",
                 "/admin/login",
                 "/admin/logout",
-                "/admin/test"
+                "/common/*"
         };
 
         //判断本次请求是否需要处理
@@ -58,8 +58,8 @@ public class LoginCheckFilter implements Filter {
 
         if (request.getSession().getAttribute("admId")!=null){
             log.info("用户已登录");
-            Long stuId = (Long) request.getSession().getAttribute("admId");
-            BaseContext.setCurrentId(stuId);
+            Long admId = (Long) request.getSession().getAttribute("admId");
+            BaseContext.setCurrentId(admId);
             filterChain.doFilter(request,response);
             return;
         }

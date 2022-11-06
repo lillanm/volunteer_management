@@ -21,6 +21,7 @@ public class ActiveController {
      * @param active
      * @return
      */
+    @CrossOrigin
     @PostMapping
     public R<String>add(@RequestBody Active active){
         activeService.save(active);
@@ -33,6 +34,7 @@ public class ActiveController {
      * @param active
      * @return
      */
+    @CrossOrigin
     @PutMapping
     public R<String> update(@RequestBody Active active){
         activeService.updateById(active);
@@ -47,6 +49,7 @@ public class ActiveController {
      * @param name
      * @return
      */
+    @CrossOrigin
     @GetMapping("/page")
     public R<Page<Active>> page(int page, int pageSize, String name) {
         Page<Active> pageInfo = new Page<>(page, pageSize);

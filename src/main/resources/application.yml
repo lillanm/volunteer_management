@@ -19,3 +19,7 @@ mybatis-plus:
       id-type: ASSIGN_ID
 vol_ma:
   path: D:\volunteer\img\
+
+#multipart:
+#  maxFileSize: 2000Mb
+#  maxRequestSize: 2500Mb

@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
 import java.nio.charset.StandardCharsets;
+import java.time.LocalDateTime;
 import java.util.Objects;
 
 @RestController
@@ -28,6 +29,7 @@ public class StudentController {
      * @param student
      * @return
      */
+    @CrossOrigin
     @PostMapping("/register")
     public R<String> register(@RequestBody Student student){
         //先查询该用户是否存在，若存在，注册失败
@@ -42,6 +44,8 @@ public class StudentController {
         String password = student.getPassword();
         String md5Password = DigestUtils.md5DigestAsHex(password.getBytes(StandardCharsets.UTF_8));
         student.setPassword(md5Password);
+        student.setCreateTime(LocalDateTime.now());
+        student.setUpdateTime(LocalDateTime.now());
         studentService.save(student);
         return R.success("注册成功");
     }
@@ -53,6 +57,7 @@ public class StudentController {
      * @param student
      * @return
      */
+    @CrossOrigin
     @PostMapping("/login")
     public R<Student> login(HttpServletRequest request, @RequestBody Student student) {
         //将页面提交的密码进行md5加密
@@ -85,6 +90,7 @@ public class StudentController {
      * @param request
      * @return
      */
+    @CrossOrigin
     @PostMapping("/logout")
     public R<String> logout(HttpServletRequest request){
         request.getSession().removeAttribute("stuId");
@@ -96,6 +102,7 @@ public class StudentController {
      * 展示学生个人信息
      * @return
      */
+    @CrossOrigin
     @GetMapping
     public R<Student> showDetail(){
         long stuId = BaseContext.getCurrentId();
@@ -109,11 +116,13 @@ public class StudentController {
      * @param student
      * @return
      */
+    @CrossOrigin
     @PutMapping
     public R<String> update(@RequestBody Student student){
         String password = student.getPassword();
         String md5Password = DigestUtils.md5DigestAsHex(password.getBytes(StandardCharsets.UTF_8));
         student.setPassword(md5Password);
+        student.setUpdateTime(LocalDateTime.now());
         studentService.updateById(student);
         return R.success("学生信息修改成功");
     }
